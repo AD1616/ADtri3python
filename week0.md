@@ -1,8 +1,4 @@
-# Data Structures Project
-
-### Replit embed below. May need to change the run function in .replit.
-
-{% include replit.html %}
+{% include navigations.html %}
 
 # Week 0
 
