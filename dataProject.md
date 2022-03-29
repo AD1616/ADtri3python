@@ -1,6 +1,11 @@
 {% include navigation.html %}
 
-{% include navig.html %}
+<table>
+    <tr>
+        <td><a href="week0">Week 0</a></td>
+    </tr>
+</table>
+<hr>
 
 # Data Structures Project
 
