@@ -1,7 +1,5 @@
 {% include navigation.html %}
 
-{% include navig.html %}
-
 # Data Structures Project
 
 ### Replit embed below. May need to change the run function in .replit.
