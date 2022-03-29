@@ -1,4 +1,4 @@
-{% include navigations.html %}
+{% include navigation.html %}
 
 # Week 0
 
