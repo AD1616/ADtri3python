@@ -6,12 +6,7 @@
 
 {% include replit.html %}
 
-<table>
-    <tr>
-        <td><a href="week0">Week 0</a></td>
-    </tr>
-</table>
-<hr>
+<td><a href="week0">Week 0</a></td>
 
 # Week 0
 
