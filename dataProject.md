@@ -6,7 +6,7 @@
 
 {% include replit.html %}
 
-<td><a href="week0">Week 0</a></td>
+<a href="https://ad1616.github.io/ADtri3python/week0">Home</a>
 
 # Week 0
 
