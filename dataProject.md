@@ -1,17 +1,17 @@
 {% include navigation.html %}
 
+# Data Structures Project
+
+### Replit embed below. May need to change the run function in .replit.
+
+{% include replit.html %}
+
 <table>
     <tr>
         <td><a href="week0">Week 0</a></td>
     </tr>
 </table>
 <hr>
-
-# Data Structures Project
-
-### Replit embed below. May need to change the run function in .replit.
-
-{% include replit.html %}
 
 # Week 0
 
