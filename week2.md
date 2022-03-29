@@ -1,3 +1,5 @@
+{% include navigation.html %}
+
 # Week 2
 
 ## Snippets
