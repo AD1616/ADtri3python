@@ -1,3 +1,5 @@
+{% set background%}
+
 {% include navigation.html %}
 
 
