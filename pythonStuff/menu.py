@@ -5,6 +5,7 @@ import os
 from TT0 import keypad, swap, pattern, Tree
 from TT1 import hacks
 from TT2 import factorial, palindrome, primeFactorsOOP, primeFactors2
+from crossover import crossover
 
 # Main list of [Prompts, Actions]
 # Two styles are supported to execute abstracted logic
@@ -17,7 +18,7 @@ main_menu = []
 
 adventure_sub_menu = [["pattern1", pattern.patternfunc], ["Tree", Tree.createTreeTester]]
 data_sub_menu = [["Lists and Loops", hacks.tester]]
-math_sub_menu = [["Fibonacci", hacks.fibTester], ["swap", swap.test_swap], ["keypad", keypad.format_tester], ["Factorial", factorial.tester], ["Palindrome", palindrome.tester], ["Prime Factors Imperative", primeFactors2.tester], ["Prime Factors OOP", primeFactorsOOP.tester]]
+math_sub_menu = [["Fibonacci", hacks.fibTester], ["swap", swap.test_swap], ["keypad", keypad.format_tester], ["Factorial", factorial.tester], ["Palindrome", palindrome.tester], ["Prime Factors Imperative", primeFactors2.tester], ["Prime Factors OOP", primeFactorsOOP.tester], ["Prime", crossover.test_prime]]
 
 # Menu banner is typically defined by menu owner
 border = "=" * 25
