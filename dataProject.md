@@ -1,3 +1,5 @@
+{% include background.html %}
+
 {% include navigation.html %}
 
 # Data Structures Project
