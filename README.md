@@ -1,5 +1,3 @@
-{% include background.html %}
-
 {% include navigation.html %}
 
 
