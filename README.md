@@ -1,4 +1,4 @@
-{% set background%}
+{% set background %}
 
 {% include navigation.html %}
 
