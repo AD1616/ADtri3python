@@ -1,3 +1,2 @@
 theme: jekyll-theme-time-machine
-
-<header style="background-image: url('{{ site.baseurl }}/img/bicycle.jpg');">
+background: https://media2.giphy.com/media/l1J9vTz6pvH5QVDX2/200.gif
