@@ -13,7 +13,7 @@
 * Create a system of taking a quiz where you can see if you are correct or incorrect, move to next question, and get a score.
 * Also have a database so that quiz questions can be created and stored server side. 
 * [Issue with commits](https://github.com/NastyAwakened/NastyAwakened/issues/136)
-* [Jump to my video and written responses](https://github.com/NastyAwakened/NastyAwakened/wiki/Sahil-Create-Task-Page#my-video)
+* [Jump to my video and written responses](https://github.com/AD1616/ADtri3python/blob/main/createtask.md#my-video)
 * PBL Feature: This is implemented as PBL and can be found under the "Classes tab" and is called "Quiz Page".
 
 ## Snippets
