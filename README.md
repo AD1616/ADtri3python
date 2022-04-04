@@ -23,4 +23,4 @@
 
 ## Week 3 Crossover coding and algorithmic final
 
-[Link to Review Ticket for this week]()
+[Link to Review Ticket for this week](https://github.com/AD1616/ADtri3python/issues/14)
