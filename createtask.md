@@ -43,215 +43,22 @@ Code for button to go to next question, calling newQuestion function:
  <button id = "newQuestionButton", onclick="newQuestion()">New Question</button>
 ```
 
-* SQL Database has stored data of the quiz questions and answers
+* List of dictionaries stores data of the quiz questions and answers
 
 Code:
 ```python 
-class Quiz(db.Model):
-    # define the Users schema
-    questionID = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(255), unique=False, nullable=False)
-    answer1 = db.Column(db.String(255), unique=True, nullable=False)
-    answer2 = db.Column(db.String(255), unique=False, nullable=False)
-    answer3 = db.Column(db.String(255), unique=False, nullable=False)
-    answer4 = db.Column(db.String(255), unique=False, nullable=False)
-    correctAnswer = db.Column(db.String(255), unique=False, nullable=False)
-
-# constructor of a User object, initializes of instance variables within object
-    def __init__(self, question, answer1, answer2, answer3, answer4, correctAnswer):
-        self.question = question
-        self.answer1 = answer1
-        self.answer2 = answer2
-        self.answer3 = answer3
-        self.answer4 = answer4
-        self.correctAnswer = correctAnswer
-
-
-# CRUD create/add a new record to the table
-    # returns self or None on error
-    def create(self):
-        try:
-            # creates a person object from Users(db.Model) class, passes initializers
-            db.session.add(self)  # add prepares to persist person object to Users table
-            db.session.commit()  # SqlAlchemy "unit of work pattern" requires a manual commit
-            return self
-        except IntegrityError:
-            db.session.remove()
-            return None
-
-    # CRUD read converts self to dictionary
-    # returns dictionary
-    def read(self):
-        return {
-            "questionID": self.questionID,
-            "question": self.question,
-            "answer1": self.answer1,
-            "answer2": self.answer2,
-            "answer3": self.answer3,
-            "answer4": self.answer4,
-            "correctAnswer": self.correctAnswer
-        }
-
-    # CRUD update: updates users name, password, phone
-    # returns self
-    def update(self, question="", answer1="", answer2="", answer3="", answer4="", correctAnswer=""):
-        """only updates values with length"""
-        if len(question) > 0:
-            self.question = question
-        if len(answer1) > 0:
-            self.answer1 = answer1
-        if len(answer2) > 0:
-            self.answer2 = answer2
-        if len(answer3) > 0:
-            self.answer3 = answer3
-        if len(answer4) > 0:
-            self.answer4 = answer4
-        if len(correctAnswer) > 0:
-            self.correctAnswer = correctAnswer
-        db.session.commit()
-        return self
-
-    # CRUD delete: remove self
-    # None
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-        return None
-```
-```python
-from flask import Blueprint, render_template, request, url_for, redirect, jsonify, make_response
-from flask_restful import Api, Resource
-import requests
-from __init__ import db
-
-# Import the new class from model
-from crud2.model import Quiz
-
-# blueprint defaults https://flask.palletsprojects.com/en/2.0.x/api/#blueprint-objects
-# Blueprint is important; in the navbar, to reference a page from the render templates in this python file,
-# you must use the syntax href={{ url_for('blueprintName.functionName') }}
-# functionName is just the name of the function with the render template for that page
-app_crud_quiz = Blueprint('quizcrud', __name__,
-                     url_prefix='/quizcrud',
-                     template_folder='templates/crud2/',
-                     static_folder='static',
-                     static_url_path='assets')
-
-# API generator https://flask-restful.readthedocs.io/en/latest/api.html#id1
-api = Api(app_crud_quiz)
-
-""" Application control for CRUD is main focus of this File, key features:
-    1.) User table queries
-    2.) app routes (Blueprint)
-    3.) API routes
-    4.) API testing
-"""
-
-""" Users table queries"""
-
-
-# Same process here of changing everything to your new class and variables
-def quiz_all():
-    """converts Users table into JSON list """
-    return [peep.read() for peep in Quiz.query.all()]
-
-
-def quiz_ilike(term):
-    """filter Users table by term into JSON list """
-    term = "%{}%".format(term)  # "ilike" is case insensitive and requires wrapped  %term%
-    table = Quiz.query.filter((Quiz.question.ilike(term)) | (Quiz.answer1.ilike(term)) | (Quiz.answer2.ilike(term)) | (Quiz.answer3.ilike(term)) | (Quiz.answer4.ilike(term)) | (Quiz.correctAnswer.ilike(term)))
-    return [peep.read() for peep in table]
-
-
-# User extraction from SQL
-def quiz_by_id(questionID):
-    """finds User in table matching userid """
-    x = Quiz.query.filter_by(questionID=questionID).first()
-    print(x)
-    return Quiz.query.filter_by(questionID=questionID).first()
-
-def quiz_by_question(question):
-    """finds User in table matching email """
-    return Quiz.query.filter_by(question=question).first()
-
-
-# Default URL
-# Default URL
-@app_crud_quiz.route('/')
-def crudQuiz():
-    """obtains all Users from table and loads Admin Form"""
-    # table = quiz_all passes in the entire data table
-    return render_template("crudQuiz.html", table=quiz_all())
-
 @app_crud_quiz.route('/quizDB/')
 def quizDB():
     """obtains all Users from table and loads Admin Form"""
     # table = quiz_all passes in the entire data table
-    return render_template("quizDB.html", table=quiz_all())
-
-
-# CRUD create/add
-@app_crud_quiz.route('/create/', methods=["POST"])
-def create():
-    """gets data from form and add it to Users table"""
-    if request.form:
-        po = Quiz(
-            request.form.get("question"),
-            request.form.get("answer1"),
-            request.form.get("answer2"),
-            request.form.get("answer3"),
-            request.form.get("answer4"),
-            request.form.get("correctAnswer")
-        )
-        po.create()
-    # Utilizing the function from model
-    return redirect(url_for('quizcrud.crudQuiz'))
-
-
-# CRUD read
-@app_crud_quiz.route('/read/', methods=["POST"])
-def read():
-    """gets userid from form and obtains corresponding data from Users table"""
-    table = []
-    if request.form:
-        questionID = request.form.get("questionID")
-        po = quiz_by_id(questionID)
-        if po is not None:
-            table = [po.read()]  # placed in list for easier/consistent use within HTML
-    return render_template("quizDB.html", table=table)
-
-
-# CRUD update
-@app_crud_quiz.route('/update/', methods=["POST"])
-def update():
-    """gets userid and name from form and filters and then data in  Users table"""
-    if request.form:
-        questionID = request.form.get("questionID")
-        question = request.form.get("question")
-        answer1 = request.form.get("answer1")
-        answer2 = request.form.get("answer2")
-        answer3 = request.form.get("answer3")
-        request.form.get("answer4")
-        request.form.get("correctAnswer")
-        po = quiz_by_id(questionID)
-        if po is not None:
-            po.update(answer1)
-            po.update(answer2)
-            po.update(answer3)
-    return redirect(url_for('quizcrud.crudQuiz'))
-
-
-# CRUD delete
-@app_crud_quiz.route('/delete/', methods=["POST"])
-def delete():
-    """gets userid from form delete corresponding record from Users table"""
-    if request.form:
-        questionID = request.form.get("questionID")
-        po = quiz_by_id(questionID)
-        if po is not None:
-            po.delete()
-    return redirect(url_for('quizcrud.crudQuiz'))
+    questionDict = [
+        {'questionID': 1, 'question': 'Which of these is in OOP?', 'answer1': 'Class', 'answer2': 'Blueprint', 'answer3': 'IP Address', 'answer4': 'GET', 'correctAnswer': 'Class'},
+        {'questionID': 2, 'question': 'Which of these is a binary number?', 'answer1': '0101', 'answer2': '#FFFFFF', 'answer3': '49', 'answer4': '2', 'correctAnswer': '0101'},
+        {'questionID': 3, 'question': 'Which of these is NOT an HTTP verb for requests?', 'answer1': 'GET', 'answer2': 'POST', 'answer3': 'DELETE', 'answer4': 'GIVE', 'correctAnswer': 'GIVE'},
+    ]
+    return render_template("quizDB.html", table=questionDict)
 ```
+
 
 * Procedure for displayQuestion has parameter of chosen question so it knows which question to display. The return type is just string in changing the DOM.
 
@@ -335,7 +142,7 @@ Code:
 
 ### Describes the overall purpose of the program
 
-* The purpose of the program is for a user to be able to make questions and answers and store them on a database. Then, they can be presented in a quiz format that gives insight into correct answers and also provides a score. 
+* The purpose of the program is for a user to be able to make questions and answers and store them on a database; right now it is just a list in a python file. Then, they can be presented in a quiz format that gives insight into correct answers and also provides a score. 
 
 ### Describes what functionality of the program is demonstrated in the video
 
@@ -350,125 +157,25 @@ Code:
 ###  The first program code segment must show how data have been stored in the list. 
 
 ```python 
-class Quiz(db.Model):
-    # define the Users schema
-    questionID = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(255), unique=False, nullable=False)
-    answer1 = db.Column(db.String(255), unique=True, nullable=False)
-    answer2 = db.Column(db.String(255), unique=False, nullable=False)
-    answer3 = db.Column(db.String(255), unique=False, nullable=False)
-    answer4 = db.Column(db.String(255), unique=False, nullable=False)
-    correctAnswer = db.Column(db.String(255), unique=False, nullable=False)
-
-# constructor of a User object, initializes of instance variables within object
-    def __init__(self, question, answer1, answer2, answer3, answer4, correctAnswer):
-        self.question = question
-        self.answer1 = answer1
-        self.answer2 = answer2
-        self.answer3 = answer3
-        self.answer4 = answer4
-        self.correctAnswer = correctAnswer
-
-
-# CRUD create/add a new record to the table
-    # returns self or None on error
-    def create(self):
-        try:
-            # creates a person object from Users(db.Model) class, passes initializers
-            db.session.add(self)  # add prepares to persist person object to Users table
-            db.session.commit()  # SqlAlchemy "unit of work pattern" requires a manual commit
-            return self
-        except IntegrityError:
-            db.session.remove()
-            return None
-
-    # CRUD read converts self to dictionary
-    # returns dictionary
-    def read(self):
-        return {
-            "questionID": self.questionID,
-            "question": self.question,
-            "answer1": self.answer1,
-            "answer2": self.answer2,
-            "answer3": self.answer3,
-            "answer4": self.answer4,
-            "correctAnswer": self.correctAnswer
-        }
-
-    # CRUD update: updates users name, password, phone
-    # returns self
-    def update(self, question="", answer1="", answer2="", answer3="", answer4="", correctAnswer=""):
-        """only updates values with length"""
-        if len(question) > 0:
-            self.question = question
-        if len(answer1) > 0:
-            self.answer1 = answer1
-        if len(answer2) > 0:
-            self.answer2 = answer2
-        if len(answer3) > 0:
-            self.answer3 = answer3
-        if len(answer4) > 0:
-            self.answer4 = answer4
-        if len(correctAnswer) > 0:
-            self.correctAnswer = correctAnswer
-        db.session.commit()
-        return self
-
-    # CRUD delete: remove self
-    # None
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-        return None
-```
-
-```python
-from flask import Blueprint, render_template, request, url_for, redirect, jsonify, make_response
-from flask_restful import Api, Resource
-import requests
-from __init__ import db
-
-# Import the new class from model
-from crud2.model import Quiz
-
-# blueprint defaults https://flask.palletsprojects.com/en/2.0.x/api/#blueprint-objects
-# Blueprint is important; in the navbar, to reference a page from the render templates in this python file,
-# you must use the syntax href={{ url_for('blueprintName.functionName') }}
-# functionName is just the name of the function with the render template for that page
-app_crud_quiz = Blueprint('quizcrud', __name__,
-                     url_prefix='/quizcrud',
-                     template_folder='templates/crud2/',
-                     static_folder='static',
-                     static_url_path='assets')
-
-# API generator https://flask-restful.readthedocs.io/en/latest/api.html#id1
-api = Api(app_crud_quiz)
-
-""" Application control for CRUD is main focus of this File, key features:
-    1.) User table queries
-    2.) app routes (Blueprint)
-    3.) API routes
-    4.) API testing
-"""
-
-""" Users table queries"""
-
-
-# Same process here of changing everything to your new class and variables
-def quiz_all():
-    """converts Users table into JSON list """
-    return [peep.read() for peep in Quiz.query.all()]
-
 @app_crud_quiz.route('/quizDB/')
 def quizDB():
     """obtains all Users from table and loads Admin Form"""
     # table = quiz_all passes in the entire data table
-    return render_template("quizDB.html", table=quiz_all())
+    questionDict = [
+        {'questionID': 1, 'question': 'Which of these is in OOP?', 'answer1': 'Class', 'answer2': 'Blueprint', 'answer3': 'IP Address', 'answer4': 'GET', 'correctAnswer': 'Class'},
+        {'questionID': 2, 'question': 'Which of these is a binary number?', 'answer1': '0101', 'answer2': '#FFFFFF', 'answer3': '49', 'answer4': '2', 'correctAnswer': '0101'},
+        {'questionID': 3, 'question': 'Which of these is NOT an HTTP verb for requests?', 'answer1': 'GET', 'answer2': 'POST', 'answer3': 'DELETE', 'answer4': 'GIVE', 'correctAnswer': 'GIVE'},
+    ]
+    return render_template("quizDB.html", table=questionDict)
 ```
+
 
 ### The second program code segment must show the data in the same list being used, such as creating new data from the existing data or accessing multiple elements in the list, as part of fulfilling the program’s purpose. 
 
 ```javascript
+  {# Passing question data from python to jinja #}
+  {% set allData = table %}
+
   {# Passing in the data table from jinja to javascript; now it can be used easily in javascript#}
         var allData = {{ allData | safe}};
    {# Function with parameters, showing a specific question. Called in newQuestion. #}
@@ -506,15 +213,15 @@ def quizDB():
 
 ### Identifies the name of the list being used in this response
 
-* In python, the list is generated by the function quiz_all(). It is then passed in as 'table' to jinja through the render template, and in javascript the name of the list that is referenced is 'allData'. 
+* In python, the list is hard coded and it is called questionDict. It is then passed in as 'table' to jinja through the render template, and in jinja the table is set to the variable allData. This is then passed into javascript retaining the same name, so the list is referred to as 'allData' in the javascript code. 
 
 ### Describes what the data contained in the list represent in your program
 
-* The list gets its data through user input on a UI through CRUD features on an SQL database. The data that it contains is in a table format, where each entry has a question, 4 answer choices, and a correct answer; a questionID is automatically assigned. 
+* The data that the list contains is in a table format, where each entry has a question, 4 answer choices, and a correct answer; a questionID is automatically assigned. 
 
 ### Explains how the selected list manages complexity in your program code by explaining why your program code could not be written, or how it would be written differently, if you did not use the list.
 
-* Without a list, it would not be possible for the user to enter in new questions and answers to be used in the quiz without hardcoding them. Without using a list, rather than using loops and updating questionNumber and simply indexing the list, each question would have to be separately hard coded resulting in n times the amount of code where n is the number of questions. 
+* Without using a list, rather than using loops and updating questionNumber and simply indexing the list, each question would have to be separately hard coded resulting in n times the amount of code where n is the number of questions. Also, it is much simpler to edit the questionbank from the list to add a new question than to have to add it to the javascript and replicate all the code associated with the question, like going to the next question and checking the right answer.
 
 ## 3c. Capture and paste two program code segments you developed during the administration of this task that contain a student-developed procedure that implements an algorithm used in your program and a call to that procedure. 
 
