@@ -175,7 +175,7 @@ def quizDB():
 
 
 
-```javascript
+```
   {# Passing in the data table from jinja to javascript; now it can be used easily in javascript#}
         var allData = {{ allData | safe}};
    {# Function with parameters, showing a specific question. Called in newQuestion. #}
