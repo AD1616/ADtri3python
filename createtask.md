@@ -173,7 +173,7 @@ def quizDB():
 
 ### The second program code segment must show the data in the same list being used, such as creating new data from the existing data or accessing multiple elements in the list, as part of fulfilling the program’s purpose. 
 
-```javascript
+
   {# Passing question data from python to jinja #}
   {% set allData = table %}
 
@@ -210,7 +210,7 @@ def quizDB():
             document.getElementById('choice2').innerHTML = allData[questionNumber]['answer2'];
             document.getElementById('choice3').innerHTML = allData[questionNumber]['answer3'];
             document.getElementById('choice4').innerHTML = allData[questionNumber]['answer4'];
-```
+
 
 ### Identifies the name of the list being used in this response
 
