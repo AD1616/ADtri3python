@@ -200,7 +200,7 @@ def quizDB():
                 document.getElementById('choice4').innerHTML = allData[displayed]['answer4'];
             }
         }
-```
+        
  {# This function is called by the button for begin quiz/next question/endquiz; it determines what questions and answers to display based on the value of question number. #}
         {# Question number is also updated through this procedure #}
         function newQuestion() {
@@ -212,7 +212,7 @@ def quizDB():
             document.getElementById('choice2').innerHTML = allData[questionNumber]['answer2'];
             document.getElementById('choice3').innerHTML = allData[questionNumber]['answer3'];
             document.getElementById('choice4').innerHTML = allData[questionNumber]['answer4'];
-
+```
 
 ### Identifies the name of the list being used in this response
 
