@@ -1,3 +1,7 @@
+{% include style.html %}
+
+{% include navigation.html %}
+
 # Worked on the Crossover Project this week
 
 ## Commits to the crossover project:
