@@ -18,11 +18,15 @@
 * PBL Feature: This is implemented as PBL and can be found under the "Classes tab" and is called "Quiz Page".
 
 ## Snippets
+
 ## How my project meets the program requirements
+
 * Input from user on which answer is selected, also next question and submit button
 
 Code for one of the answer choice inputs: 
+
 ```html
+
 <div id='block-11' style='padding: 10px;'>
             <label for='option1' style=' padding: 5px; font-size: 2.5rem;'>
                 <input type='radio' name='option' value='' id='option1' style='transform: scale(1.6); margin-right: 10px; vertical-align: middle; margin-top: -2px;' />
@@ -31,23 +35,34 @@ Code for one of the answer choice inputs:
             </label>
             <span id='result-11'></span>
         </div>
+
 ```
+
 Code for choosing which question to see at end input box:
+
 ```html
+
 <div id="show" style="display: none">
         <input type="text" id="chosenQuestion">
         <button id="chosenButton" onclick="specificQuestion()"> Choose which question to see</button>
     </div>
+
 ```
+
 Code for button to go to next question, calling newQuestion function:
+
 ```html
+
  <button id = "newQuestionButton", onclick="newQuestion()">New Question</button>
+
 ```
 
 * List of dictionaries stores data of the quiz questions and answers
 
 Code:
+
 ```python 
+
 @app_crud_quiz.route('/quizDB/')
 def quizDB():
     """obtains all Users from table and loads Admin Form"""
@@ -58,13 +73,16 @@ def quizDB():
         {'questionID': 3, 'question': 'Which of these is NOT an HTTP verb for requests?', 'answer1': 'GET', 'answer2': 'POST', 'answer3': 'DELETE', 'answer4': 'GIVE', 'correctAnswer': 'GIVE'},
     ]
     return render_template("quizDB.html", table=questionDict)
+    
 ```
 
 
 * Procedure for displayQuestion has parameter of chosen question so it knows which question to display. The return type is just string in changing the DOM.
 
 Code:
+
 ```javascript 
+
  {# Function with parameters, showing a specific question. Called in newQuestion. #}
         function displayQuestion(chosenQuestion) {
             document.getElementById('showQuestion').innerHTML = allData[chosenQuestion-1]['question'];
@@ -73,12 +91,16 @@ Code:
             document.getElementById('choicetext-3').innerHTML = allData[chosenQuestion-1]['answer3'];
             document.getElementById('choicetext-4').innerHTML = allData[chosenQuestion-1]['answer4'];
         }
+        
 ```
+
 * Sequence through if/else statement with question number
 * Selection by displaying the specific questions based on the index (which is determined by question number)
 
 Code for both sequence and selection: 
+
 ```javascript 
+
            if ((questionNumber+1 >= allData.length)) {
                 document.getElementById('newQuestionButton').innerHTML = 'End Quiz'
                 end+=1
@@ -93,11 +115,15 @@ Code for both sequence and selection:
                 document.getElementById('newQuestionButton').innerHTML = 'Next Question';
                 questionNumber +=1
             }
+            
 ```
+
 * Iteration in the answer checking system
 
 Code:
+
 ```javascript 
+
 for (let i = 1; i < 5; i++) {
                 if (document.getElementById('option' + i).checked) {
                     if (correct ==  allData[answerindex]['answer' + i.toString()]) {
@@ -115,20 +141,29 @@ for (let i = 1; i < 5; i++) {
                     }
                 }
             }
+            
 ```
+
 * Procedure is called by the button
 
 Code:
+
 ```html 
+
 <button id = "newQuestionButton", onclick="newQuestion()">New Question</button>
+
 ```
+
 ```javascript
+
  if (end==2) {
                     document.getElementById('done').innerHTML = 'Good job! You got ' + score + '/' + (allData.length).toString()
                     {# Calling the function to show the input box to look at a specific question #}
                     show_last();
                 }
+                
 ```
+
 * Instructions for output through comments in the code.
 
 # My Video
@@ -158,6 +193,7 @@ Code:
 ###  The first program code segment must show how data have been stored in the list. 
 
 ```python 
+
 @app_crud_quiz.route('/quizDB/')
 def quizDB():
     """obtains all Users from table and loads Admin Form"""
@@ -168,17 +204,21 @@ def quizDB():
         {'questionID': 3, 'question': 'Which of these is NOT an HTTP verb for requests?', 'answer1': 'GET', 'answer2': 'POST', 'answer3': 'DELETE', 'answer4': 'GIVE', 'correctAnswer': 'GIVE'},
     ]
     return render_template("quizDB.html", table=questionDict)
+    
 ```
 
 
 ### The second program code segment must show the data in the same list being used, such as creating new data from the existing data or accessing multiple elements in the list, as part of fulfilling the program’s purpose. 
 
 ```html
+
   {# Passing question data from python to jinja #}
   {% set allData = table %}
+
 ```
 
 ```javascript
+
   {# Passing in the data table from jinja to javascript; now it can be used easily in javascript#}
         var allData = {{ allData | safe}};
    {# Function with parameters, showing a specific question. Called in newQuestion. #}
@@ -213,6 +253,7 @@ def quizDB():
             document.getElementById('choice2').innerHTML = allData[questionNumber]['answer2'];
             document.getElementById('choice3').innerHTML = allData[questionNumber]['answer3'];
             document.getElementById('choice4').innerHTML = allData[questionNumber]['answer4'];
+            
 ```
 
 ### Identifies the name of the list being used in this response
@@ -238,6 +279,7 @@ on the functionality of the procedure
 and iteration 
 
 ```javascript
+
 function evaluation(view) {
             var correct = allData[answerindex]['correctAnswer'].toString()
             document.getElementById('block1').style.border = '3px'
@@ -283,9 +325,11 @@ function evaluation(view) {
                 document.getElementById("score").style.display = 'none';
             }
         }
+        
 ```
 
 ### The second program code segment must show where your student-developed procedure is being called in your program.
+
 
 
 ```html
@@ -294,13 +338,16 @@ function evaluation(view) {
         <button id = "scoreViewBut", onclick="showScore()">Show Score? Type Yes to show and No to hide </button>
     </div>
     <button id="submit" type='button' onclick='evaluation()'>Submit</button>
+
 ```
 
 ```javascript
+
         function showScore() {
             var chosen = document.getElementById('scoreView').value;
             evaluation(chosen);
         }
+        
 ```
 
 ### Describes in general what the identified procedure does and how it contributes to the overall functionality of the program
