@@ -289,6 +289,10 @@ function evaluation(view) {
 
 
 ```html
+    <div>
+        <input type="text" id="scoreView">
+        <button id = "scoreViewBut", onclick="showScore()">Show Score? Type Yes to show and No to hide </button>
+    </div>
     <button id="submit" type='button' onclick='evaluation()'>Submit</button>
 ```
 
