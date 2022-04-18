@@ -211,8 +211,9 @@ def quizDB():
 ### The second program code segment must show the data in the same list being used, such as creating new data from the existing data or accessing multiple elements in the list, as part of fulfilling the program’s purpose. 
 
 ```html
-
+       
   {# Passing question data from python to jinja #}
+  "here goes curly brace percent set allData = table percent curly brace"
 ```
 
 ```javascript
