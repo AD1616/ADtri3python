@@ -299,8 +299,8 @@ function evaluation(view) {
                     if (correct ==  allData[answerindex]['answer' + i.toString()]) {
                         var x = allData[answerindex]['answer' + i.toString()];
                         console.log(x)
-                        document.getElementById('block' + i.toString()).style.border = '3px solid limegreen'
-                        document.getElementById('result' + i.toString()).style.color = 'limegreen'
+                        document.getElementById('block' + i.toString()).style.border = '3px solid green'
+                        document.getElementById('result' + i.toString()).style.color = 'green'
                         document.getElementById('result' + i.toString()).innerHTML = 'Correct!'
                         if (view != "Yes" && view != "No") {
                             score = score + 1
