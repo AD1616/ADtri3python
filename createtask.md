@@ -213,8 +213,6 @@ def quizDB():
 ```html
 
   {# Passing question data from python to jinja #}
-  //set allData = table
-
 ```
 
 ```javascript
