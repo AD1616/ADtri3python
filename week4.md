@@ -98,10 +98,10 @@ def snake():
             </div>
         </div>
 
-        {% block navbar_script %}
+        "here goes curly brace percent block navbar_script percent curly brace"
             <!-- Navigation bar JavaScript support -->
             <script src={{  url_for("static", filename="javascript/navbar.js", version='140') }}></script>
-        {% endblock %}
+        "here goes curly brace percent endblock percent curly brace"
 
 
     </div>
