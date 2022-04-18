@@ -333,11 +333,14 @@ function evaluation(view) {
 
 
 ```html
+    <button id="submit" type='button' onclick='evaluation()'>Submit</button>
     <div>
         <input type="text" id="scoreView">
         <button id = "scoreViewBut", onclick="showScore()">Show Score? Type Yes to show and No to hide </button>
     </div>
-    <button id="submit" type='button' onclick='evaluation()'>Submit</button>
+    <div style="color:white; font-size: 2rem;">
+        <p style="display: none;" id="score">Score: 0</p>
+    </div>
 
 ```
 
