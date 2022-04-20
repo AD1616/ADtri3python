@@ -1,5 +1,7 @@
 # Score: 47/50
 
+![image](https://user-images.githubusercontent.com/64157584/164306419-af1b9d79-36c2-4c2a-836b-f8af6fec31b8.png)
+
 # Corrections
 
 ## Question 9
