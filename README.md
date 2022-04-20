@@ -24,3 +24,11 @@
 ## Week 3 Crossover coding and algorithmic final
 
 [Link to Review Ticket for this week](https://github.com/AD1616/ADtri3python/issues/14)
+
+## Week 4 Create Task and Logins
+
+[Link to Review Ticket for this week](https://github.com/AD1616/ADtri3python/issues/15)
+
+## Week 5 AP Testing plan and practice
+
+[Link to Review Ticket for this week](https://github.com/AD1616/ADtri3python/issues/16)
