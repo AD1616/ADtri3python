@@ -10,3 +10,4 @@
 - [5.5-5.6 Notes](https://ad1616.github.io/ADtri3python/prepStuff/5notes56)
 - [Quiz 1](https://ad1616.github.io/ADtri3python/prepStuff/quiz1)
 - [Quiz 2](https://ad1616.github.io/ADtri3python/prepStuff/quiz2)
+- [Study Plan](https://ad1616.github.io/ADtri3python/prepStuff/plan)
