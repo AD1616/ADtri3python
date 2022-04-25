@@ -165,30 +165,30 @@ and iteration
 
 ###  Explains in detailed steps how the algorithm implemented in the identified procedure works. Your explanation must be detailed enough for someone else to recreate it.
 
-* First, the list containing all of the questions must be indexed at the current question in order to get the dictionary containing all of the data for the question. The index is determined by a global variable which is updated by a separate procedure and simply needs to be referenced in this procedure. The "correctAnswer" key in the dictionary needs to be accessed, and the value is stored as a variable. Then, the procedure must iterate through the options using a for loop to see which choice is selected by the user. An if statement checks if the user has selected the current choice. If they have not, then the code moves on to the next iteration of the for loop. The loop has to check option1, option2, etc. so it gets the current option by concatenating the word "option" with the current index. A second if statement checks if the chosen answer choice matches the correct answer. If it does, format a green border and show text that says correct. Add an if statement so that the score is updated when the function is called with a parameter that is not yes or no since those parameters are for the input box and should not update the score. If the answer is incorrect, determined through an else statement, format a red border and show text that says incorrect. Set the score text element in the html to the value of score. 
+* The procedure needs to take an input parameter called "view" which determines wheter the running score is shown. First, the list containing all of the questions must be indexed at the current question in order to get the dictionary containing all of the data for the question. The index is determined by a global variable which is updated by a separate procedure and simply needs to be referenced in this procedure. The "correctAnswer" key in the dictionary needs to be accessed, and the value is stored as a variable. Then, the procedure must iterate through the options using a for loop to see which choice is selected by the user. An if statement checks if the user has selected the current choice. If they have not, then the code moves on to the next iteration of the for loop. The loop has to check option1, option2, etc. so it gets the current option by concatenating the word "option" with the current index. It has to check these values because these are the names given in the html elements for the answer choices. A second if statement checks if the chosen answer choice matches the correct answer. If it does, format a green border and show text that says correct. Add an if statement so that the score is updated when the function is called with a parameter that is not yes or no since those parameters are for the input box and should not update the score. If the answer is incorrect, determined through an else statement, format a red border and show text that says incorrect. Set the score text element in the html to the value of score. Next, check if the view parameter is "Yes"; if it is, then display the score. If it is "No", then do not display the score. If it is neither "Yes" or "no", then do not display the score.
 
 ## 3d. Describes two calls to the procedure identified in written response 3c. Each call must pass a different argument(s) that causes a different segment of code in the algorithm to execute.
 
 ### First call: 
 
-If the evaluation function is called with the argument "Yes" by typing that into the input box, then the segment of code will execute to display the score. 
+If the procedure "evaluation" is called with the "view" parameter "Yes" when the user types "Yes" into the input box, then the segment of code will execute to display the html element that contains the current score. 
 
 ### Second call: 
 
-If the evaluation function is called with the argument "No" or anything else but "Yes", then the segment of code will execute to hide the score. 
+If the procedure "evaluation" is called with the "view" parameter "No" or anything else but "Yes", then the segment of code will execute to hide the html element that contains the current score. 
 
 ### Describes what condition(s) is being tested by each call to the procedure. Condition(s) tested by the first call: 
 
-The condition tested is if the argument is equal to the string "Yes".
+The condition tested is if the parameter, "view", is equal to the string "Yes".
 
 ### Condition(s) tested by the second call: 
 
-The condition tested is if the argument is equal to the string "No".
+The condition tested is if the parameter, "view", is equal to the string "No", or if "view" is equal to neither "Yes" nor "No".
 
 ### Identifies the result of each call. Result of the first call: 
 
-The DOM(Document Object Model) of the score text will be shown; in other words, the score will be visible. 
+The DOM(Document Object Model) of the score text will be shown; in other words, the current score will be visible to the user. 
 
 ### Result of the second call: 
 
-The DOM of the score text will not be shown, so the score will not be visible. 
+The DOM of the score text will not be shown, so the current score will not be visible to the user. 
