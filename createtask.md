@@ -178,7 +178,7 @@ Code:
 
 ### Describes the overall purpose of the program
 
-* The purpose of the program is for a user to be able to make questions and answers and store them on a database; right now it is just a list in a python file. Then, they can be presented in a quiz format that gives insight into correct answers and also provides a score. 
+* The overall purpose of the program is to provide functionality for an interactive quiz. The User Interface for the quiz has the following features: display for questions, answer choices, score, and a button to move to the next question. The program also supports the following features: getting input by the user for selected answers, evaluating whether the answer is correct or incorrect, and updating the current score.
 
 ### Describes what functionality of the program is demonstrated in the video
 
@@ -192,80 +192,45 @@ Code:
 
 ###  The first program code segment must show how data have been stored in the list. 
 
-```python 
-
-@app_crud_quiz.route('/quizDB/')
-def quizDB():
-    """obtains all Users from table and loads Admin Form"""
-    # table = quiz_all passes in the entire data table
-    questionDict = [
-        {'questionID': 1, 'question': 'Which of these is in OOP?', 'answer1': 'Class', 'answer2': 'Blueprint', 'answer3': 'IP Address', 'answer4': 'GET', 'correctAnswer': 'Class'},
-        {'questionID': 2, 'question': 'Which of these is a binary number?', 'answer1': '0101', 'answer2': '#FFFFFF', 'answer3': '49', 'answer4': '2', 'correctAnswer': '0101'},
-        {'questionID': 3, 'question': 'Which of these is NOT an HTTP verb for requests?', 'answer1': 'GET', 'answer2': 'POST', 'answer3': 'DELETE', 'answer4': 'GIVE', 'correctAnswer': 'GIVE'},
-    ]
-    return render_template("quizDB.html", table=questionDict)
-    
+```javascript 
+        var allQuizData = [
+            {'questionID': 1, 'question': 'Which of these is in OOP?', 'answer1': 'Class', 'answer2': 'Blueprint', 'answer3': 'IP Address', 'answer4': 'GET', 'correctAnswer': 'Class'},
+            {'questionID': 2, 'question': 'Which of these is a binary number?', 'answer1': '0101', 'answer2': '#FFFFFF', 'answer3': '49', 'answer4': '2', 'correctAnswer': '0101'},
+            {'questionID': 3, 'question': 'Which of these is NOT an HTTP verb for requests?', 'answer1': 'GET', 'answer2': 'POST', 'answer3': 'DELETE', 'answer4': 'GIVE', 'correctAnswer': 'GIVE'},
+        ]
 ```
 
 
 ### The second program code segment must show the data in the same list being used, such as creating new data from the existing data or accessing multiple elements in the list, as part of fulfilling the program’s purpose. 
 
-```html
-       
-  {# Passing question data from python to jinja #}
-  "here goes curly brace percent set allData = table percent curly brace"
-```
 
 ```javascript
-
-  {# Passing in the data table from jinja to javascript; now it can be used easily in javascript#}
-        var allData = {{ allData | safe}};
-   {# Function with parameters, showing a specific question. Called in newQuestion. #}
-        function displayQuestion(chosenQuestion) {
-            if (chosenQuestion-1 > -1 && chosenQuestion < allData.length) {
-                document.getElementById("all").style.display = 'inline';
-                document.getElementById('showQuestion').innerHTML = allData[chosenQuestion-1]['question'];
-                document.getElementById('choice1').innerHTML = allData[chosenQuestion-1]['answer1'];
-                document.getElementById('choice2').innerHTML = allData[chosenQuestion-1]['answer2'];
-                document.getElementById('choice3').innerHTML = allData[chosenQuestion-1]['answer3'];
-                document.getElementById('choice4').innerHTML = allData[chosenQuestion-1]['answer4'];
-            }
-            else {
-                var displayed = Math.floor(Math.random() * (allData.length))
-                document.getElementById("all").style.display = 'inline';
-                document.getElementById('showQuestion').innerHTML = allData[displayed]['question'];
-                document.getElementById('choice1').innerHTML = allData[displayed]['answer1'];
-                document.getElementById('choice2').innerHTML = allData[displayed]['answer2'];
-                document.getElementById('choice3').innerHTML = allData[displayed]['answer3'];
-                document.getElementById('choice4').innerHTML = allData[displayed]['answer4'];
-            }
-        }
         
  {# This function is called by the button for begin quiz/next question/endquiz; it determines what questions and answers to display based on the value of question number. #}
-        {# Question number is also updated through this procedure #}
         function newQuestion() {
             if (questionNumber > -1) {
                 document.getElementById("all").style.display = 'inline';
             }
-            document.getElementById('showQuestion').innerHTML = allData[questionNumber]['question'];
-            document.getElementById('choice1').innerHTML = allData[questionNumber]['answer1'];
-            document.getElementById('choice2').innerHTML = allData[questionNumber]['answer2'];
-            document.getElementById('choice3').innerHTML = allData[questionNumber]['answer3'];
-            document.getElementById('choice4').innerHTML = allData[questionNumber]['answer4'];
-            
+            document.getElementById('showQuestion').innerHTML = allQuizData[questionNumber]['question'];
+            document.getElementById('choice1').innerHTML = allQuizData[questionNumber]['answer1'];
+            document.getElementById('choice2').innerHTML = allQuizData[questionNumber]['answer2'];
+            document.getElementById('choice3').innerHTML = allQuizData[questionNumber]['answer3'];
+            document.getElementById('choice4').innerHTML = allQuizData[questionNumber]['answer4'];
+        }
 ```
 
 ### Identifies the name of the list being used in this response
 
-* In python, the list is hard coded and it is called questionDict. It is then passed in as 'table' to jinja through the render template, and in jinja the table is set to the variable allData. This is then passed into javascript retaining the same name, so the list is referred to as 'allData' in the javascript code. 
+* The name of the list is "allQuizData". 
 
 ### Describes what the data contained in the list represent in your program
 
-* The data that the list contains is in a table format, where each entry has a question, 4 answer choices, and a correct answer; a questionID is automatically assigned. 
+* The list, "allQuizData" represents the question bank for the quiz. It is a list of three dictionary elements, and each dictionary contains key value pairs as follows: "questionID" (the ID of the question) , "question" (the question itself), "answer1" (first answer choice), "answer2" (second answer choice), "answer3" (third answer choice), "answer4" (fourth answer choice), and "correctAnswer" (the correct answer option). Each list element independently completely represents all the data for one question that will be later needed by the code. 
 
 ### Explains how the selected list manages complexity in your program code by explaining why your program code could not be written, or how it would be written differently, if you did not use the list.
 
 * Without using a list, rather than using loops and updating questionNumber and simply indexing the list, each question would have to be separately hard coded resulting in n times the amount of code where n is the number of questions. Also, it is much simpler to edit the questionbank from the list to add a new question than to have to add it to the javascript and replicate all the code associated with the question, like going to the next question and checking the right answer.
+* By using 
 
 ## 3c. Capture and paste two program code segments you developed during the administration of this task that contain a student-developed procedure that implements an algorithm used in your program and a call to that procedure. 
 
