@@ -19,7 +19,7 @@
 
 # My Video
 
-* [Sahil Create Task Video](https://www.youtube.com/watch?v=B9sHHwXYmSk)
+* [Sahil Create Task Video]()
 
 # Written Responses
 
@@ -33,11 +33,11 @@
 
 ### Describes what functionality of the program is demonstrated in the video
 
-* The functionality of the program shown is to be able to take a quiz and get a score, as well as a final result. Each time you answer a question, the program will tell you if you are correct or wrong. Previous questions can be viewed again upon finishing the quiz.
+* The functionality of the program shown is to be able to take a quiz and get a score, as well as a final result. Each time you answer a question, the program will tell you if you are correct or wrong. A running score can also be toggled on and off by the user. 
 
 ### Describes the input and output of the program demonstrated in the video
 
-* Input of the program is shown through being able to select an answer choice as well as pressing the buttons for next question and submit. Output is shown through correct/incorrect upon answering as well as a score and the display of the question and answer choices. Input is also there for the text box to show score, output is to show or hide score. Finally, input is there for textbox to show questions and answers and output is the display through changing the DOM(Document Object Model). 
+* Input of the program is shown through being able to select an answer choice for the presented questions as well as pressing the buttons for "Next Question" and "Submit". Output is shown through the display of the question and four answer choices, "Correct!"/"Incorrect!" assessment upon answering the questions, and both a running and final score. Input is also there through a text box to show score where the user types "Yes" or "No", and output is to show or hide the score by changing the DOM (Document Object Model) of the score element. 
 
 ## 3b. Capture and paste two program code segments you developed during the administration of this task that contain a list (or other collection type) being used to manage complexity in your program.
 
@@ -59,14 +59,13 @@
         
  {# This function is called by the button for begin quiz/next question/endquiz; it determines what questions and answers to display based on the value of question number. #}
         function newQuestion() {
-            if (questionNumber > -1) {
-                document.getElementById("all").style.display = 'inline';
-            }
+            ...
             document.getElementById('showQuestion').innerHTML = allQuizData[questionNumber]['question'];
             document.getElementById('choice1').innerHTML = allQuizData[questionNumber]['answer1'];
             document.getElementById('choice2').innerHTML = allQuizData[questionNumber]['answer2'];
             document.getElementById('choice3').innerHTML = allQuizData[questionNumber]['answer3'];
             document.getElementById('choice4').innerHTML = allQuizData[questionNumber]['answer4'];
+            ...
         }
 ```
 
@@ -80,8 +79,7 @@
 
 ### Explains how the selected list manages complexity in your program code by explaining why your program code could not be written, or how it would be written differently, if you did not use the list.
 
-* Without using a list, rather than using loops and updating questionNumber and simply indexing the list, each question would have to be separately hard coded resulting in n times the amount of code where n is the number of questions. Also, it is much simpler to edit the questionbank from the list to add a new question than to have to add it to the javascript and replicate all the code associated with the question, like going to the next question and checking the right answer.
-* By using 
+* By using a list, the current question can be easily displayed through the following process: create a variable called questionNumber representing the question number and starting it at 0; index the list at questionNumber to get the dictionary with all the data for the current question; get the value for the needed key and then display each value as needed by assigning it to different HTML elements; update questionNumber. Without the use of a list, the same code that was written above would be duplicated as many times as there are questions (three times for three questions), with the questionNumber variable instead being replaced by a hardcoded number. Without the use of a list, the code is not scalable to have many questions, as the code size dramatically would increase with each added question. 
 
 ## 3c. Capture and paste two program code segments you developed during the administration of this task that contain a student-developed procedure that implements an algorithm used in your program and a call to that procedure. 
 
@@ -95,48 +93,51 @@ and iteration
 
 ```javascript
 
-function evaluation(view) {
-            var correct = allData[answerindex]['correctAnswer'].toString()
-            document.getElementById('block1').style.border = '3px'
-            document.getElementById('result1').style.color = 'white'
-            document.getElementById('result1').innerHTML = ''
-            document.getElementById('block2').style.border = '3px'
-            document.getElementById('result2').style.color = 'white'
-            document.getElementById('result2').innerHTML = ''
-            document.getElementById('block3').style.border = '3px'
-            document.getElementById('result3').style.color = 'white'
-            document.getElementById('result3').innerHTML = ''
-            document.getElementById('block4').style.border = '3px'
-            document.getElementById('result4').style.color = 'white'
-            document.getElementById('result4').innerHTML = ''
+        function evaluation(view) {
+            {# Storing the correct answer; answerindex was updated in the newQuestion function, and the list is indexed at this value to get the dictionary for the current question
+            and then the value for the key "correctAnswer" is accessed. #}
+            var correct = allQuizData[answerindex]['correctAnswer'].toString()
+
+            {# Iterating through all of the choices to see if they were selected by the user. If selected, the selected choice is compared to the correct answer stored in the database.#}
             for (let i = 1; i < 5; i++) {
-                if (document.getElementById('option' + i).checked) {
-                    if (correct ==  allData[answerindex]['answer' + i.toString()]) {
-                        var x = allData[answerindex]['answer' + i.toString()];
-                        console.log(x)
-                        document.getElementById('block' + i.toString()).style.border = '3px solid green'
+                {# The first if statement checks if the user has selected the current choice. If they have not, then the code moves on to the next iteration of the for loop. #}
+                {# The loop has to check option1, option2, etc. so it gets the current option by concatonating the word "option" with the current index. #}
+                if (document.getElementById('option' + i.toString()).checked) {
+                    {# The second if statement checks if the chosen answer choice matches the correct answer. #}
+                    if (correct ==  allQuizData[answerindex]['answer' + i.toString()]) {
+                        {# If it does, I format a green border and show text that says correct #}
+                        document.getElementById('block' + i.toString()).style.border = '5px solid green'
                         document.getElementById('result' + i.toString()).style.color = 'green'
                         document.getElementById('result' + i.toString()).innerHTML = 'Correct!'
+                        {# The score is updated regardless of the view parameter #}
                         if (view != "Yes" && view != "No") {
                             score = score + 1
                         }
                     }
+                    {# If the answer is incorrect, I format a red border and show text that says incorrect #}
                     else {
-                        document.getElementById('block' + i.toString()).style.border = '3px solid red'
+                        document.getElementById('block' + i.toString()).style.border = '5px solid red'
                         document.getElementById('result' + i.toString()).style.color = 'red'
                         document.getElementById('result' + i.toString()).innerHTML = 'Incorrect!'
                     }
                 }
             }
+            {# The score text is set to the value of score. #}
             document.getElementById('score').innerHTML = "Score:" + score;
 
+            {# Based on the parameter of view, calling the function will either yield the score to be displayed or not displayed.#}
+
             if(view == "Yes") {
+                {# If the passed in parameter was Yes, then the current score will be displayed. #}
                 document.getElementById("score").style.display = 'block';
             }
             else if(view == "No") {
+                {# If the parameter was No, then the current score will not be displayed. #}
                 document.getElementById("score").style.display = 'none';
             }
             else {
+                {# If the parameter was not yes or no, then the current score will not be displayed. #}
+                {# The submit button calls evaluation with a view parameter of null, which is also handled by this else statement. #}
                 document.getElementById("score").style.display = 'none';
             }
         }
@@ -146,23 +147,13 @@ function evaluation(view) {
 ### The second program code segment must show where your student-developed procedure is being called in your program.
 
 
-
-```html
-    <button id="submit" type='button' onclick='evaluation()'>Submit</button>
-    <div>
-        <input type="text" id="scoreView">
-        <button id = "scoreViewBut", onclick="showScore()">Show Score? Type Yes to show and No to hide </button>
-    </div>
-    <div style="color:white; font-size: 2rem;">
-        <p style="display: none;" id="score">Score: 0</p>
-    </div>
-
-```
-
 ```javascript
 
+        {# Called by the button next to the input box to show the running score #}
         function showScore() {
+            {# Setting a variable to the text in the input box #}
             var chosen = document.getElementById('scoreView').value;
+            {# Calling the function, evaluation, with a parameter to show score or not #}
             evaluation(chosen);
         }
         
@@ -170,11 +161,11 @@ function evaluation(view) {
 
 ### Describes in general what the identified procedure does and how it contributes to the overall functionality of the program
 
-* The procedure checks the submitted answer and displays whether it was correct or incorrect. It also implements the scoring feature based on if the answer was right or wrong. Finally, it determines whether the score is displayed or not. 
+* The "evaluation" procedure checks the submitted answer and displays whether it was correct or incorrect. It also updates the score by incrementing it if the user got the question right. Finally, it determines whether the current score is displayed or not based on a parameter called view. 
 
 ###  Explains in detailed steps how the algorithm implemented in the identified procedure works. Your explanation must be detailed enough for someone else to recreate it.
 
-* The list which contains the questions and answers also has the correct answer for each question. At the index of the current question, which is answerindex as determined by a separate procedure, correctAnswer is then indexed for that question and converted to a string and stored in a variable to be compared with as the correct answer. The question and answer blocks are then styled. A for loop is used with 4 iterations to check each answer choice and change the surrounding styling to green and display correct if the answer is right or change it to red and display incorrect if the answer is wrong. Additionally, score is increased by 1 for a correct answer but it stays the same if the answer is incorrect. The difference in styling is done through an if statement that checks if that answer matches the variable correct previously established. The parameter 'view' is passed in by an input box and through if else statements, if it is yes then the score element DOM(Document Object Model) is shown but otherwise it is not shown. 
+* First, the list containing all of the questions must be indexed at the current question in order to get the dictionary containing all of the data for the question. The index is determined by a global variable which is updated by a separate procedure and simply needs to be referenced in this procedure. The "correctAnswer" key in the dictionary needs to be accessed, and the value is stored as a variable. Then, the procedure must iterate through the options using a for loop to see which choice is selected by the user. An if statement checks if the user has selected the current choice. If they have not, then the code moves on to the next iteration of the for loop. The loop has to check option1, option2, etc. so it gets the current option by concatenating the word "option" with the current index. A second if statement checks if the chosen answer choice matches the correct answer. If it does, format a green border and show text that says correct. Add an if statement so that the score is updated when the function is called with a parameter that is not yes or no since those parameters are for the input box and should not update the score. If the answer is incorrect, determined through an else statement, format a red border and show text that says incorrect. Set the score text element in the html to the value of score. 
 
 ## 3d. Describes two calls to the procedure identified in written response 3c. Each call must pass a different argument(s) that causes a different segment of code in the algorithm to execute.
 
