@@ -115,7 +115,7 @@ and iteration
                         document.getElementById('result' + i.toString()).style.color = 'green'
                         document.getElementById('result' + i.toString()).innerHTML = 'Correct!'
                         {# The score is updated regardless of the view parameter #}
-                        if (view != "Yes" && view != "No") {
+                        if (view == null) {
                             score = score + 1
                         }
                     }
