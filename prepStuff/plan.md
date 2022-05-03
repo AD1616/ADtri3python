@@ -19,3 +19,8 @@
 
 * Turn in the create task
 * Review some of the terms from topics like internet protocols. Make sure I am familiar with all CS jargon that might be asked.
+
+## Reflection
+
+* I got 49/50 on the quiz. My only mistake was a dumb mistake.
+* My create task is submitted.
