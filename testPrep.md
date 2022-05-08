@@ -11,4 +11,5 @@
 - [Quiz 1](https://ad1616.github.io/ADtri3python/prepStuff/quiz1)
 - [Quiz 2](https://ad1616.github.io/ADtri3python/prepStuff/quiz2)
 - [Quiz 3](https://ad1616.github.io/ADtri3python/prepStuff/quiz3)
+- [Quiz 4](https://ad1616.github.io/ADtri3python/prepStuff/quiz4)
 - [Study Plan](https://ad1616.github.io/ADtri3python/prepStuff/plan)
