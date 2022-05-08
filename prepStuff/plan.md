@@ -24,3 +24,11 @@
 
 * I got 49/50 on the quiz. My only mistake was a dumb mistake.
 * My create task is submitted.
+
+# Week 7 plan
+
+* Finish studying for the exam by taking the last exam and doing corrections.
+
+## Reflection
+
+* I got 46/50 on the quiz. There are some gaps in my understanding of the internet. Other than that, they were dumb errors.
