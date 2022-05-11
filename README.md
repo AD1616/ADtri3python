@@ -36,3 +36,7 @@
 ## Week 6 AP Testing plan and practice
 
 [Link to Review Ticket for this week](https://github.com/AD1616/ADtri3python/issues/17)
+
+## Week 7 AP Testing plan and practice
+
+[Link to Review Ticket for this week](https://github.com/AD1616/ADtri3python/issues/18)
